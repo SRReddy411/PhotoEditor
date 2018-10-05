@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "MyProducts-Swift.h"
- 
+
 
 
 @interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,PhotoEditorDelegate>{
@@ -68,7 +68,7 @@
 //MARK:- Image Picker Controller delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-     [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
     UIImage *original = [info objectForKey:UIImagePickerControllerOriginalImage];
     _profileImage.image = original;
     _photoEditor = [[PhotoEditorViewController alloc]init];
@@ -79,17 +79,19 @@
     
     editor.image = original;
     NSMutableArray * imagesArray = [NSMutableArray new];
-    for (int i=0; i<=10; i++) {
-       
+    [imagesArray removeAllObjects];
+    for (int i=0; i<=16; i++) {
+        
         NSLog(@"images %@",[NSString stringWithFormat:@"Image%d",i]);
-        [imagesArray addObject:[UIImage imageNamed:[NSString stringWithFormat:@"Image%d",i]]];
-     
+        [imagesArray addObject:[NSString stringWithFormat:@"Image%d",i]];
+        //[imagesArray addObject:[UIImage imageNamed:[NSString stringWithFormat:@"Image%d",i]]];
+        
     }
     editor.stickers = imagesArray;
-      NSLog(@"stickers count %lu",(unsigned long)editor.stickers.count);
+    NSLog(@"stickers count %lu",(unsigned long)editor.stickers.count);
     [self presentViewController:editor animated:YES completion:nil];
-   // [self.navigationController pushViewController:editor animated:YES];
- 
+    // [self.navigationController pushViewController:editor animated:YES];
+    
     
 }
 - (void)didReceiveMemoryWarning {

@@ -9,8 +9,10 @@
 import UIKit
 
 extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
-    //Translation is moving object
     
+    
+    //Translation is moving object
+
     func panGesture(_ recognizer: UIPanGestureRecognizer) {
         if let view = recognizer.view {
             if view is UIImageView {
@@ -34,6 +36,7 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
         }
     }
     
+    //MARK:- PINCH GESTURE
     func pinchGesture(_ recognizer: UIPinchGestureRecognizer) {
         if let view = recognizer.view {
             if view is UITextView {
@@ -55,13 +58,28 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
         }
     }
     
-    func rotationGesture(_ recognizer: UIRotationGestureRecognizer) {
+    //MARK:- Rotate gestures
+func rotationGesture(_ recognizer: UIRotationGestureRecognizer) {
+
+
         if let view = recognizer.view {
-            view.transform = view.transform.rotated(by: recognizer.rotation)
-            recognizer.rotation = 0
+            if view is UIImageView {
+        for imageView in subImageViews(view: tempImageView) {
+            if recognizer.state == .ended{
+                lastRotation = 0.0
+                return
+            }
+            let rotation : CGFloat = 0.0 - (lastRotation - recognizer.rotation)
+            let currentTransform = view.transform
+            let newTransform = currentTransform.rotated(by: rotation)
+            view.transform = newTransform
+            lastRotation = recognizer.rotation
+                }
+            }
         }
     }
-    
+
+ 
     func tapGesture(_ recognizer: UITapGestureRecognizer) {
         if let view = recognizer.view {
             if view is UIImageView {
@@ -135,8 +153,8 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
         view.center = CGPoint(x: view.center.x + recognizer.translation(in: tempImageView).x,
                               y: view.center.y + recognizer.translation(in: tempImageView).y)
         
-        //        let point = recognizer.location(in: tempImageView)
-        //        view.center = point
+                let point = recognizer.location(in: tempImageView)
+                view.center = point
         
         recognizer.setTranslation(CGPoint.zero, in: tempImageView)
         

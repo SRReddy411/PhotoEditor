@@ -36,7 +36,7 @@ public final class PhotoEditorViewController: UIViewController {
     var colorsCollectionViewDelegate: ColorsCollectionViewDelegate!
     
     public var image: UIImage?
-    public var stickers : [UIImage] = []
+    public var stickers : [String] = []
     
     @objc var photoEditorDelegate: PhotoEditorDelegate?
     //
@@ -54,6 +54,10 @@ public final class PhotoEditorViewController: UIViewController {
     var activeTextView: UITextView?
     var imageRotated: Bool = false
     var imageViewToPan: UIImageView?
+    var lastRotation : CGFloat = 0.0
+    var previousScale : CGFloat = 1.0
+    var beginX : CGFloat = 0.0
+    var beginY : CGFloat = 0.0
     //
     
     //Register Custom font before we load XIB
@@ -88,6 +92,7 @@ public final class PhotoEditorViewController: UIViewController {
         
         configureCollectionView()
         bottomSheetVC = BottomSheetViewController(nibName: "BottomSheetViewController", bundle: Bundle(for: BottomSheetViewController.self))
+        bottomSheetVC.stickers = stickers
         
     }
     
@@ -235,10 +240,14 @@ public final class PhotoEditorViewController: UIViewController {
         hideToolbar(hide: true)
         self.tempImageView.isUserInteractionEnabled = false
         bottomSheetVC.stickerDelegate = self
-        
-        for image in self.stickers {
-            bottomSheetVC.stickers.append(image)
-        }
+//
+//        for image in self.stickers {
+//            print("photo editing images",image)
+//
+//            bottomSheetVC.stickers.append(image)
+//            bottomSheetVC.stickers.removeDuplicates()
+//             print("photo editing images",image)
+//        }
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
@@ -369,6 +378,8 @@ extension PhotoEditorViewController: StickerDelegate {
         pinchGesture.delegate = self
         view.addGestureRecognizer(pinchGesture)
         
+        
+       
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self,
                                                                     action:#selector(PhotoEditorViewController.rotationGesture) )
         rotationGestureRecognizer.delegate = self
