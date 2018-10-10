@@ -9,8 +9,6 @@
 #import "ViewController.h"
 #import "MyProducts-Swift.h"
 
-
-
 @interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,PhotoEditorDelegate>{
     UIImage *profile_pic;
     UIImagePickerController * picker_Profile_Pic;
