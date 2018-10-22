@@ -92,7 +92,7 @@ class BottomSheetViewController: UIViewController, UIGestureRecognizerDelegate,U
         layout.itemSize = CGSize(width: width, height: 100)
         
         collectioView = UICollectionView(frame: frame, collectionViewLayout: layout)
-        collectioView.backgroundColor = .clear
+        collectioView.backgroundColor = .white
         scrollView.addSubview(collectioView)
         
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.size.width), height: 40))

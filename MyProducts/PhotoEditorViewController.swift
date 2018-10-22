@@ -126,6 +126,8 @@ public final class PhotoEditorViewController: UIViewController {
         
     }
     
+    
+    //MARK:- Clear btn Tapped
     @IBAction func clearButtonTapped(_ sender: AnyObject) {
         //clear drawing
         imageView.image = image
